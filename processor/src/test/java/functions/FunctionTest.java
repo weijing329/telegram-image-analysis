@@ -1,5 +1,6 @@
 package functions;
 
+import io.quarkus.funqy.knative.events.CloudEventBuilder;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import org.hamcrest.CoreMatchers;
@@ -14,7 +15,7 @@ public class FunctionTest {
 
     // @Test
     // void testFunction() {
-    //     Output output = (new Function()).function(new Input("Hello!"), null);
+    //     Output output = (new Function()).function(CloudEventBuilder.create().build(new Input("Url", "ChatId"))).data();
     //     Assertions.assertEquals("Hello!", output.getMessage());
     // }
 
@@ -29,7 +30,7 @@ public class FunctionTest {
                 .header("ce-id", notNullValue())
                 .header("ce-specversion", equalTo("1.0"))
                 .header("ce-source", equalTo("function"))
-                .header("ce-type", equalTo("telegram.image.processed"))
+                .header("ce-type", equalTo("function.output"))
                 .body("message", equalTo("Hello!"));
     }
 

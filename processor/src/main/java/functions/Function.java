@@ -1,6 +1,5 @@
 package functions;
 
-
 import com.microsoft.azure.cognitiveservices.vision.faceapi.FaceAPI;
 import com.microsoft.azure.cognitiveservices.vision.faceapi.FaceAPIManager;
 import com.microsoft.azure.cognitiveservices.vision.faceapi.models.AzureRegions;
@@ -8,6 +7,7 @@ import com.microsoft.azure.cognitiveservices.vision.faceapi.models.FaceAttribute
 import io.quarkus.funqy.Context;
 import io.quarkus.funqy.Funq;
 import io.quarkus.funqy.knative.events.CloudEvent;
+import io.quarkus.funqy.knative.events.CloudEventBuilder;
 import io.quarkus.funqy.knative.events.CloudEventMapping;
 import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.subscription.UniEmitter;
@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Your Function class
+ */
 public class Function {
 
     @Inject
