@@ -1,9 +1,8 @@
 'use strict';
-const { CloudEvent } = require('cloudevents');
-const runtime = require('faas-js-runtime');
+const { start } = require('faas-js-runtime');
 const request = require('supertest');
 
-const func = require('..');
+const func = require('..').handle;
 const test = require('tape');
 
 const Spec = {
@@ -18,8 +17,13 @@ const data = {
   customerId: '01234'
 }
 
+const errHandler = t => err => {
+  t.error(err);
+  t.end();
+};
+
 test('Integration: handles a valid event', t => {
-  runtime(func, server => {
+  start(func).then(server => {
     t.plan(5);
     request(server)
       .post('/')
@@ -33,12 +37,11 @@ test('Integration: handles a valid event', t => {
       .end((err, result) => {
         t.error(err, 'No error');
         t.ok(result);
-        t.deepEqual(result.body, data);
-        t.equal(result.headers['ce-type'], 'user:verified');
-        t.equal(result.headers['ce-source'], 'function.verifyUser');
+        t.deepEqual(result.body.data, data);
+        t.equal(result.headers['ce-type'], 'echo');
+        t.equal(result.headers['ce-source'], 'event.handler');
         t.end();
         server.close();
       });
-  }, { log: false });
+  }, errHandler(t));
 });
-

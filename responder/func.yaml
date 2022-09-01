@@ -1,15 +1,24 @@
+specVersion: 0.25.0
 name: responder
 namespace: ""
 runtime: node
+registry: ""
 image: ""
 imageDigest: ""
-builder: default
-builderMap:
-  default: quay.io/boson/faas-nodejs-builder
+build: local
+git: {}
+buildpacks: []
 volumes: []
+buildEnvs: []
 envs:
 - name: TELEGRAM_API_KEY
   value: '{{ env:TELEGRAM_API_KEY }}'
 annotations: {}
 options: {}
 labels: []
+healthEndpoints:
+  liveness: /health/liveness
+  readiness: /health/readiness
+created: 2022-09-01T22:28:23.908985566+08:00
+invocation:
+  format: cloudevent
