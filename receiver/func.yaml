@@ -1,15 +1,26 @@
+specVersion: 0.25.0
 name: receiver
 namespace: ""
 runtime: go
+registry: ""
 image: ""
 imageDigest: ""
-builder: default
-builderMap:
-  default: quay.io/boson/faas-go-builder
+build: local
+git: {}
+buildpacks:
+- paketo-buildpacks/go-dist
+- ghcr.io/boson-project/go-function-buildpack:tip
 volumes: []
+buildEnvs: []
 envs:
 - name: TELEGRAM_API_KEY
   value: '{{ env:TELEGRAM_API_KEY }}'
 annotations: {}
 options: {}
 labels: []
+healthEndpoints:
+  liveness: /health/liveness
+  readiness: /health/readiness
+created: 2022-09-01T15:49:03.871640166+08:00
+invocation:
+  format: cloudevent
